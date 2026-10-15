@@ -11,8 +11,11 @@ import {
   Menu,
   X,
   Briefcase,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/lib/theme";
 
 export const NAV = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -29,6 +32,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   useEffect(() => setMobileOpen(false), [path]);
   const current = NAV.find((n) => n.to === path)?.label ?? "Workspace";
 
@@ -102,6 +106,14 @@ export function AppShell({ children }: { children: ReactNode }) {
           <span className="hidden text-muted-foreground sm:inline">/</span>
           <h1 className="text-sm font-semibold">{current}</h1>
           <div className="ml-auto flex items-center gap-3">
+            <button
+              onClick={toggleTheme}
+              className="grid size-8 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
+            </button>
             <span className="hidden items-center gap-1.5 rounded-full bg-secondary px-2.5 py-1 text-xs font-medium text-muted-foreground sm:flex">
               <span className="size-1.5 rounded-full bg-success" /> Live AI
             </span>
