@@ -27,7 +27,7 @@ const TYPES = ["Business enquiry", "Follow-up", "Meeting Request", "Customer Sup
 
 function parse(text: string) {
   const m = text.match(/^\s*Subject:\s*(.*)\n?([\s\S]*)$/i);
-  return m ? { subject: m[1].trim(), body: m[2].replace(/^\s*\n/, "") } : { subject: "", body: text };
+  return m ? { subject: (m[1] ?? "").trim(), body: (m[2] ?? "").replace(/^\s*\n/, "") } : { subject: "", body: text };
 }
 
 function EmailPage() {
